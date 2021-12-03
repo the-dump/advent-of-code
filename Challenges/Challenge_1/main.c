@@ -109,9 +109,9 @@ uint64_t count_increasing_3_segment_windows(const uint64_t* array, size_t length
 
 int main(int argc, char** argv)
 {
-    if (argc < 2) return EXIT_FAILURE;
-
-    size_t length = 5000;
+    if (argc < 3) return EXIT_FAILURE;
+    
+    size_t length = strtoull(argv[2], NULL, 10);
     uint64_t* array = malloc(length * sizeof(uint64_t));
     
     if (read_input(argv[1], array, &length) == -1)
