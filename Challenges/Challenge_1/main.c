@@ -37,14 +37,16 @@ int read_input(const char* name, uint64_t* array, size_t* length)
     
     mem[mem_index] = 0;
 
-    const char* str = mem;
+    char* str = mem;
 
     size_t index = 0;
     size_t max_length = *length;
 
     while (index < max_length)
     {
-        const char* end = mem + mem_index;
+        char* end = mem + mem_index;
+        if (str == end) break;
+        
         uint64_t value = strtoull(str, &end, 10);
         
         if (str != end)
@@ -107,14 +109,16 @@ uint64_t count_increasing_3_segment_windows(const uint64_t* array, size_t length
     return count;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    size_t length = 2000;
+    if (argc < 2) return EXIT_FAILURE;
+
+    size_t length = 5000;
     uint64_t* array = malloc(length * sizeof(uint64_t));
     
-    if (read_input("input.txt", array, &length) == -1)
+    if (read_input(argv[1], array, &length) == -1)
     {
-        perror("failed to read input file");
+        perror("Failed to read input file");
         return EXIT_FAILURE;
     }
 
