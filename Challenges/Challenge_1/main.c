@@ -13,7 +13,7 @@ int read_input(const char* name, uint64_t* array, size_t* length)
 {
     int file = -1;
     char* mem = NULL;
-
+    
     file = open(name, O_RDONLY);
     if (file == -1) goto cleanup;
 
@@ -36,7 +36,6 @@ int read_input(const char* name, uint64_t* array, size_t* length)
     }
     
     mem[mem_index] = 0;
-
     char* str = mem;
 
     size_t index = 0;
@@ -45,8 +44,6 @@ int read_input(const char* name, uint64_t* array, size_t* length)
     while (index < max_length)
     {
         char* end = mem + mem_index;
-        if (str == end) break;
-        
         uint64_t value = strtoull(str, &end, 10);
         
         if (str != end)
@@ -55,6 +52,7 @@ int read_input(const char* name, uint64_t* array, size_t* length)
             index += 1;
         }
         
+        if (str == mem + mem_index) break;
         str = end + 1;
     }
     
@@ -121,12 +119,12 @@ int main(int argc, char** argv)
         perror("Failed to read input file");
         return EXIT_FAILURE;
     }
-
+    
     uint64_t answer_1 = count_increasing_pairs(array, length);
     uint64_t answer_2 = count_increasing_3_segment_windows(array, length);
     
     printf("ANSWER PART I: %" PRIu64 "\n", answer_1);
     printf("ANSWER PART II: %" PRIu64 "\n", answer_2);
-
+    
     return EXIT_SUCCESS;
 }
