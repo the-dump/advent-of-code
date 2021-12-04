@@ -51,7 +51,7 @@ int read_input(const char* name, uint64_t* array, size_t* length)
         if (str != end) array[index++] = value;
         if (str == last) break;
         
-        str = end + 1;
+        str = end;
     }
     
     *length = index;
