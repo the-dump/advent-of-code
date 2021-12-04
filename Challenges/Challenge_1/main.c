@@ -35,7 +35,9 @@ int read_input(const char* name, uint64_t* array, size_t* length)
         mem_remaining -= chars;
     }
     
-    mem[mem_index] = 0;
+    char* last = mem + mem_index;
+    *last = 0;
+
     char* str = mem;
 
     size_t index = 0;
@@ -43,16 +45,12 @@ int read_input(const char* name, uint64_t* array, size_t* length)
 
     while (index < max_length)
     {
-        char* end = mem + mem_index;
+        char* end = last;
         uint64_t value = strtoull(str, &end, 10);
         
-        if (str != end)
-        {
-            array[index] = value;
-            index += 1;
-        }
+        if (str != end) array[index++] = value;
+        if (str == last) break;
         
-        if (str == mem + mem_index) break;
         str = end + 1;
     }
     
@@ -126,5 +124,7 @@ int main(int argc, char** argv)
     printf("ANSWER PART I: %" PRIu64 "\n", answer_1);
     printf("ANSWER PART II: %" PRIu64 "\n", answer_2);
     
+    free(array);
+
     return EXIT_SUCCESS;
 }
