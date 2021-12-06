@@ -1,6 +1,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include <ctype.h>
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,6 +10,19 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+void skip_space(char* str, char** end)
+{
+    char* a = *end;
+
+    while (str != a)
+    {
+        if (!isspace(*str)) break;
+        str += 1;
+    }
+
+    *end = str;
+}
 
 int read_input(const char* name, uint64_t* array, size_t* length)
 {
@@ -45,7 +60,14 @@ int read_input(const char* name, uint64_t* array, size_t* length)
 
     while (index < max_length)
     {
-        char* end = last;
+        char* end;
+
+        end = last;
+        skip_space(str, &end);
+
+        str = end;
+        
+        end = last;
         uint64_t value = strtoull(str, &end, 10);
         
         if (str != end) array[index++] = value;

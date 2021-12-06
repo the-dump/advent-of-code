@@ -164,7 +164,7 @@ struct position calculate_final_position(const struct movement* array, size_t le
 struct position calculate_final_position_with_aim(const struct movement* array, size_t length)
 {
     struct position current_position = {0, 0};
-    uint64_t aim = 0;
+    int64_t aim = 0;
 
     for (size_t index = 0; index < length; ++index)
     {
