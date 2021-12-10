@@ -131,9 +131,12 @@ int main(int argc, char** argv)
 {
     if (argc < 3) return EXIT_FAILURE;
     
+    uint64_t* array = NULL;
     size_t length = strtoull(argv[2], NULL, 10);
-    uint64_t* array = malloc(length * sizeof(uint64_t));
     
+    array = malloc(length * sizeof(uint64_t));
+    if (array == NULL) goto cleanup;
+
     if (read_input(argv[1], array, &length) == -1)
     {
         perror("Failed to read input file");
@@ -146,7 +149,7 @@ int main(int argc, char** argv)
     printf("ANSWER PART I: %" PRIu64 "\n", answer_1);
     printf("ANSWER PART II: %" PRIu64 "\n", answer_2);
     
-    free(array);
+    cleanup: if (array != NULL) free(array);
 
     return EXIT_SUCCESS;
 }

@@ -197,7 +197,7 @@ void bingo_draw_one(uint64_t drawn, uint64_t* board_numbers, size_t width, size_
 
         size_t row_index = drawn_index / width;
         size_t column_index = drawn_index % width;
-
+        
         if (check_board_row(board, row_index, width) || check_board_column(board, column_index, width, height))
         {
              winners[winner_index++] = board_index;        
